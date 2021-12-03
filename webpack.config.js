@@ -1,10 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
-  entry: "./src/app.js",
+  entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "app.min.js",
+    filename: "index.min.js",
   },
   target: "web",
   module: {
