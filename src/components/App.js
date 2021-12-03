@@ -11,12 +11,18 @@ class App extends React.Component {
   render() {
     return (
       <main>
-        <p className="quote">
+        <div className="quote">
           {this.state.quote
             ? this.renderQuote(this.state.quote)
             : "Click Next to get random quote"}
-        </p>
-        <button className="previous">Previous</button>
+        </div>
+        <button
+          disabled={!this.state.previousQuote}
+          onClick={this.previousQuote}
+          className="previous"
+        >
+          Previous
+        </button>
         <button onClick={this.nextQuote} className="next">
           Next
         </button>
@@ -31,17 +37,24 @@ class App extends React.Component {
       .then((resp) => resp.json())
       .then((data) => {
         const quote = data[Math.floor(Math.random() * data.length)];
+        if (this.state.quote) {
+          this.setState({ previousQuote: this.state.quote });
+        }
         this.setState({ quote: quote });
       });
   };
 
   renderQuote = (quote) => {
     return (
-      <div>
+      <>
         <p className="quote__text">{quote.quote}</p>
         <p className="quote__author">{quote.author}</p>
-      </div>
+      </>
     );
+  };
+
+  previousQuote = () => {
+    this.setState({ quote: this.state.previousQuote, previousQuote: null });
   };
 }
 
